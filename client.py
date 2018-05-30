@@ -16,19 +16,20 @@ options = args.parse_args()
 
 # Create a socket (SOCK_STREAM means a TCP socket)
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-    # Connect to server and send data
-    sock.connect((options.ip, options.port))
-    if options.switch:
-        value = 2
-    else:
-        value = options.value
+    # Connect to server
+    try:
+        sock.connect((options.ip, options.port))
+    except ConnectionRefusedError:
+        print("Connection refused. Is server running and {} port open?".format(options.port))
+        exit(1)
+    # Build a command
+    value = 2 if options.switch else options.value
     command = "{} {}".format(options.pin, value)
+    # Send command
     sock.sendall(bytes(command, "ascii"))
+    # Get response (100 bytes maximum)
     received = str(sock.recv(100), "ascii")
 
 if "ERR" in received:
     print("Server answered with '{}'".format(received))
     exit(1)
-
-if "OK" in received:
-    exit(0)
