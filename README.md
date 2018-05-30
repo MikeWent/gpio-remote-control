@@ -2,11 +2,15 @@
 
 Control your Raspberry Pi GPIO remotely with TCP socket.
 
-## Why
+## Intro
 
 SSH is secure but too slow to control a couple of LEDs connected to GPIO pins, so I decided to write a simple server with [socketserver](https://docs.python.org/3.5/library/socketserver.html) built-in Python library to implement **really fast** remote GPIO control.
 
-## More technical details
+## How to use
+
+Run `server.py`, then use `client.py` as remote control (see `$ ./client.py --help`).
+
+## Technical details
 
 Server runs on `28010` port by default on all interfaces & all addresses (`0.0.0.0` stands for it). This behavior can be changed via editing `server.py` (line 7 and 8).
 
