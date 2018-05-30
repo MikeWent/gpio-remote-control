@@ -12,12 +12,12 @@ Server runs on `28010` port by default on all interfaces & all addresses (`0.0.0
 
 ## Client protocol
 
-Implemented in `client.py`, more details: `$ ./client.py --help`
+Implemented in `client.py`, more details: `$ ./client.py --help`.
 
 1. Connect to server via default TCP socket interface.
 2. Send a `command`, for example `18 1`, which means "switch pin `18` to value `1`".
 
-   See available pins on [pinout.xyz](https://pinout.xyz)
+   See available pins on [pinout.xyz](https://pinout.xyz).
 
    Available values: `0` -> LOW, `1`-> HIGH, `2` -> switch (non-standard), means "switch pin's value from 1 to 0 or from 0 to 1 depending on it's current value".
 
@@ -39,7 +39,7 @@ $ nc 192.168.1.2 28010
 18 1 OK
 ```
 
-Pipes and `nc`:
+Pipes and netcat:
 
 ```bash
 $ echo "18 1" | nc 192.168.1.2 28010
