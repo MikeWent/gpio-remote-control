@@ -20,8 +20,13 @@ $ ./client.py --pin 18 --value 1
 # set pin 18 to 0 (LOW)
 $ ./client.py --pin 18 --value 0
 
+# switch pin 18 (see Client protocol)
+$ ./client.py --pin 18 --switch
+
 # more compact syntax
 $ ./client.py -n 18 -v 1
+# for switch
+$ ./client.py -n 18 -s
 
 # with IP specified
 $ ./client.py --ip 192.168.1.2 -n 18 -v 1
@@ -41,7 +46,6 @@ $ nc 192.168.1.2 28010
 
 ```bash
 $ echo "18 1" | nc 192.168.1.2 28010
-18 1 OK
 ```
 
 ## Client protocol
