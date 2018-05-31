@@ -56,7 +56,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
             response = bytes("SYNTAX ERR", "ascii")
             self.request.sendall(response)
             return
-
+        # Command is valid, process it
         try:
             if value == "2":
                 logging.info("switch pin #%s (from %s)", pin, client_ip)
@@ -81,15 +81,16 @@ if __name__ == "__main__":
         format="%(asctime)s %(levelname)s: %(message)s",
         datefmt="%m-%d %H:%M:%S"
     )
+    logging.info("starting server on %s:%s", BIND_IP, PORT)
     try:
         server = socketserver.TCPServer((BIND_IP, PORT), TCPHandler)
-        ip, port = server.server_address
-        logging.info("started server on %s:%s", ip, port)
+        logging.debug("server started on %s:%s", *server.server_address)
         server.serve_forever()
     except KeyboardInterrupt:
-        print()
-        logging.info("interrupted by user")
-        exit()
-    finally:
+        print() # add newline after ^C in terminal
+        logging.critical("interrupted by user")
         server.shutdown()
-        server.server_close()
+        exit()
+    except OSError as e:
+        logging.debug("OSError %s", e)
+        logging.critical("Address/port is already in use. Is another instance of server running?")
