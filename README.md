@@ -6,9 +6,27 @@ Requirements: Python 3.5+
 
 ## How to use
 
-Run `server.py` on your Raspberry Pi. Then use `client.py` as remote control (see `$ ./client.py --help`). You can alternatively use `nc` (OpenBSD netcat) to send commands (see examples below).
+### Server
 
-Server runs on `28010` port on all interfaces & all addresses (`0.0.0.0` stands for it) by default. This behavior can be changed via editing `server.py` (line 7 and 8).
+Run `server.py` on your Raspberry Pi. This can be (and should be) done with systemd.
+
+```bash
+$ git clone https://github.com/MikeWent/gpio-remote-control && cd gpio-remote-control
+$ ./install-systemd-unit.sh
+```
+
+- to start server: `sudo systemctl start gpio-remote-control`
+- to stop server: `sudo systemctl stop gpio-remote-control`
+
+Server runs on `28010` port on all interfaces & all addresses (`0.0.0.0` stands for it) by default. This behavior can be changed via editing the `install-systemd-unit.sh` file (run it again after editing):
+
+```ini
+ExecStart=/usr/bin/python3 $PWD/server.py --systemd --ip 192.168.12.34 --port 1234
+```
+
+### Client
+
+Use `client.py` as remote control (see `$ ./client.py --help`). You can alternatively use `nc` (OpenBSD netcat) to send commands (see examples below).
 
 ### Examples
 
@@ -62,6 +80,7 @@ Implemented in `client.py`, more details: `$ ./client.py --help`.
 
    The response can be:
    - `SYNTAX ERR` if server cannot understand the command
+   - `command OK` if everything is fine
    - `command PERM ERR` if changing the pin's value isn't permitted for some reason
 
 ## License
