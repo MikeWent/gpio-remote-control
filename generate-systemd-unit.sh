@@ -11,7 +11,7 @@ After=network.target network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 $PWD/server.py
+ExecStart=/usr/bin/python3 $PWD/server.py --systemd
 Restart=always
 RestartSec=5
 User=$USER

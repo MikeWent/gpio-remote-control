@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import logging
 import socketserver
 from os.path import exists as path_exists
@@ -6,6 +7,12 @@ from time import sleep
 
 PORT = 28010
 BIND_IP = "0.0.0.0"
+
+args = argparse.ArgumentParser()
+args.add_argument("-p", "--port", help="local port to bind, default is {}".format(PORT), type=int, default=PORT)
+args.add_argument("-i", "--ip", help="IP address to bind, default is {}".format(BIND_IP), default=BIND_IP)
+args.add_argument("--systemd", help="indicate that server was started by systemd (don't use when starting by hands)", action="store_true")
+options = args.parse_args()
 
 def gpio_set(pin, value):
     """Set GPIO pin to value"""
@@ -75,14 +82,14 @@ class TCPHandler(socketserver.BaseRequestHandler):
             self.request.sendall(response)
 
 if __name__ == "__main__":
-    socketserver.TCPServer.allow_reuse_address = True
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s: %(message)s",
-        datefmt="%m-%d %H:%M:%S"
-    )
+    if options.systemd:
+        log_message_format = "%(levelname)s: %(message)s"
+    else:
+        log_message_format = "%(asctime)s %(levelname)s: %(message)s"
+    logging.basicConfig(level=logging.INFO, format=log_message_format, datefmt="%m-%d %H:%M:%S")
     logging.info("starting server on %s:%s", BIND_IP, PORT)
     try:
+        socketserver.TCPServer.allow_reuse_address = True
         server = socketserver.TCPServer((BIND_IP, PORT), TCPHandler)
         logging.debug("server started on %s:%s", *server.server_address)
         server.serve_forever()
