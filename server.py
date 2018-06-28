@@ -84,10 +84,10 @@ if __name__ == "__main__":
     else:
         log_message_format = "%(asctime)s %(levelname)s: %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_message_format, datefmt="%m-%d %H:%M:%S")
-    logging.info("starting server on %s:%s", BIND_IP, PORT)
+    logging.info("starting server on %s:%s", options.ip, options.port)
     try:
         socketserver.TCPServer.allow_reuse_address = True
-        server = socketserver.TCPServer((BIND_IP, PORT), TCPHandler)
+        server = socketserver.TCPServer((options.ip, options.port), TCPHandler)
         logging.debug("server started on %s:%s", *server.server_address)
         server.serve_forever()
     except KeyboardInterrupt:
