@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# info
 name="gpio-remote-control"
-desc="Control Raspberry Pi GPIO remotely"
-documentation="https://github.com/MikeWent/gpio-remote-control"
 
 # generate
 echo "[Unit]
-Description=$desc
-Documentation=$documentation
+Description=Raspberry Pi GPIO remote control
+Documentation=https://github.com/MikeWent/gpio-remote-control
+Wants=network-online.target
+After=network.target network-online.target
 
 [Service]
 Type=simple
