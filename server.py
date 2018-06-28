@@ -5,12 +5,9 @@ import socketserver
 from os.path import exists as path_exists
 from time import sleep
 
-PORT = 28010
-BIND_IP = "0.0.0.0"
-
 args = argparse.ArgumentParser()
-args.add_argument("-p", "--port", help="local port to bind, default is {}".format(PORT), type=int, default=PORT)
-args.add_argument("-i", "--ip", help="IP address to bind, default is {}".format(BIND_IP), default=BIND_IP)
+args.add_argument("-p", "--port", help="TCP port to bind, default is 28010", type=int, default=28010)
+args.add_argument("-i", "--ip", help="IP address to bind, default is 0.0.0.0", type=str, default="0.0.0.0")
 args.add_argument("--systemd", help="indicate that server was started by systemd (don't use when starting by hands)", action="store_true")
 options = args.parse_args()
 

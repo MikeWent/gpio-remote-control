@@ -2,12 +2,9 @@
 import argparse
 import socket
 
-DEFAULT_SERVER_PORT = 28010
-DEFAULT_SERVER_IP = "127.0.0.1"
-
 args = argparse.ArgumentParser()
-args.add_argument("-p", "--port", help="server port to bind, default is {}".format(DEFAULT_SERVER_PORT), type=int, default=DEFAULT_SERVER_PORT)
-args.add_argument("-i", "--ip", help="IP address to bind, default is {}".format(DEFAULT_SERVER_IP), default=DEFAULT_SERVER_IP)
+args.add_argument("-p", "--port", help="server port, default is 28010", type=int, default=28010)
+args.add_argument("-i", "--ip", help="server IP address, default is 127.0.0.1", default="127.0.0.1")
 args.add_argument("-n", "--pin", help="GPIO pin number", type=int, required=True)
 ex_args = args.add_mutually_exclusive_group(required=True)
 ex_args.add_argument("-v", "--value", metavar="N", help="new GPIO pin value tp set", type=int, choices=(0, 1, 2))
