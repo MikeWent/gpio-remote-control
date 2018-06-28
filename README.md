@@ -2,11 +2,11 @@
 
 Control your Raspberry Pi GPIO remotely with TCP socket.
 
+Requirements: Python 3.5+
+
 ## How to use
 
-Run `server.py` on your Raspberry Pi.
-
-Then use `client.py` as remote control (see `$ ./client.py --help`). You can alternatively use `nc` (OpenBSD netcat) to send commands (see examples below).
+Run `server.py` on your Raspberry Pi. Then use `client.py` as remote control (see `$ ./client.py --help`). You can alternatively use `nc` (OpenBSD netcat) to send commands (see examples below).
 
 Server runs on `28010` port on all interfaces & all addresses (`0.0.0.0` stands for it) by default. This behavior can be changed via editing `server.py` (line 7 and 8).
 
@@ -30,9 +30,8 @@ $ ./client.py -n 18 -s
 
 # with IP specified
 $ ./client.py --ip 192.168.1.2 -n 18 -v 1
-
-# with IP and port specified
-$ ./client.py -i 192.168.1.2 -p 1234 -n 18 -v 1
+# with port specified
+$ ./client.py --port 1234 -n 18 -v 1
 ```
 
 ### With netcat
